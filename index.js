@@ -9,7 +9,11 @@ function createGrid(squareCount){
 }
 
 function newGrid(){
-    let squareCount = prompt("How many squares for a new grid?")
+    let squareCount = "";
+
+    while(!(Number.isInteger(squareCount)) || squareCount > 100){
+        squareCount = parseInt(prompt("How many squares for a new grid? <100"))
+    }
 
     for(const square of document.querySelectorAll(".square")){
         square.remove()
