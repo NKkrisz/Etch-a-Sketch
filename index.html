@@ -7,10 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Etch-a-Sketch</h1>
-    <button onclick="newGrid()">aaaa</button>
     <div class="container">
-
+        <div class="interactions">
+            <h1>Etch-a-Sketch</h1>
+            <button onclick="newGrid()">New Grid</button>
+            <div class="checkboxes">
+                <p>Toggle Rainbow Mode</p><input type="checkbox" id="rainbowToggle">
+            </div>
+            <div class="checkboxes">
+                <p>Toggle Darkening Mode</p><input type="checkbox" id="darkeningToggle">
+            </div>
+            <div class="checkboxes">
+                <p>Toggle Override</p><input type="checkbox" id="overrideToggle">
+            </div>
+        </div>
+        <div class="drawingBoard"></div>
     </div>
 
     <script src="index.js"></script>
