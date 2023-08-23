@@ -1,3 +1,4 @@
+//TODO: ERASER MODE
 //Optimized way of coloring the squares and rainbow mode randomization
 document.addEventListener("mouseover", (e) => {
     if(e.target.classList.contains("square")){
@@ -32,21 +33,17 @@ function disableConflictingToggle(otherCheckbox){
     if(otherCheckbox.checked) otherCheckbox.checked = false
 }
 
-//Set checked state to false as default (fixes page refresh problems related to modes)
 const rainbowToggle = document.querySelector("#rainbowToggle");
-rainbowToggle.checked = false
 rainbowToggle.addEventListener("click", () => {
     if(rainbowToggle.checked) disableConflictingToggle(darkeningToggle)
 })
 
 const darkeningToggle = document.querySelector("#darkeningToggle");
-darkeningToggle.checked = false
 darkeningToggle.addEventListener("click", () => {
     if(darkeningToggle.checked) disableConflictingToggle(rainbowToggle)
 })
 
 const overrideToggle = document.querySelector("#overrideToggle");
-overrideToggle.checked = false
 
 //Grid creation
 const drawingBoard = document.querySelector(".drawingBoard")
