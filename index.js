@@ -1,6 +1,15 @@
-//Coloring, erasing or overriding squares' colors on mouse-movement
-document.addEventListener("mouseover", (e) => {
-    const elementOver = e.target;
+//TODO: Color picker, erase board, share drawing, touch compatibility
+//Coloring, darkening, erasing or overriding squares' colors on mouse/touch-movement
+document.addEventListener("mouseover", (e) => {sketching(e, "mouse")})
+document.addEventListener("mousedown", (e) => {sketching(e, "mouse")})
+
+function sketching(e, inputType) {
+    let elementOver;
+    if(inputType === "mouse"){
+        //Only work when left mouse button (1) is held down
+        if(e.buttons !== 1) return;
+        elementOver = e.target;
+    }
 
     if(elementOver.classList.contains("square")){
         if(rainbowToggle.checked){
@@ -38,7 +47,7 @@ document.addEventListener("mouseover", (e) => {
         elementOver.style.backgroundColor = "rgba(128, 128, 128, 0.99)"
         elementOver.classList.add("colored")
     }
-})
+}
 
 //Disables conflicting toggles/modes
 function disableConflictingToggles(toggleName, ...conflictingToggles){
@@ -71,7 +80,7 @@ overrideToggle.addEventListener("click", () => {
 //Grid creation
 const drawingBoard = document.querySelector(".drawingBoard")
 
-function newGrid(squareCount = 16){
+function newGrid(squareCount){
 
     //Limit input to 100 and below for performance limitations
     while(!(Number.isInteger(squareCount)) || squareCount > 100){
@@ -97,4 +106,4 @@ function newGrid(squareCount = 16){
     }
 }
 
-newGrid()
+newGrid(16)
