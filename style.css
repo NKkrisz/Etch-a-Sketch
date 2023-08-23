@@ -1,3 +1,4 @@
+/* TODO: MORE RESPONSIVE DESIGN */
 *{
     margin: 0;
     padding: 0;
@@ -58,7 +59,7 @@ button{
     padding: 10px;
 }
 
-#rainbowToggle, #darkeningToggle, #overrideToggle{
+#rainbowToggle, #darkeningToggle, #overrideToggle, #eraserToggle{
     width: 30px;
     height: 30px;
 }
@@ -73,6 +74,10 @@ button{
 
 #overrideToggle{
     accent-color: red;
+}
+
+#eraserToggle{
+    accent-color: pink;
 }
 
 p{

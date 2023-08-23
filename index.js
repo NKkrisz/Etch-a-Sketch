@@ -1,54 +1,87 @@
-//TODO: ERASER MODE
-//Optimized way of coloring the squares and rainbow mode randomization
+//Coloring, erasing or overriding squares' colors on mouse-movement
 document.addEventListener("mouseover", (e) => {
-    if(e.target.classList.contains("square")){
+    const elementOver = e.target;
+
+    if(elementOver.classList.contains("square")){
         if(rainbowToggle.checked){
-            if(e.target.classList.contains("colored") && !overrideToggle.checked) return;
+            if(elementOver.classList.contains("colored") && !overrideToggle.checked) return;
+            
             let r = Math.floor(Math.random() * 256)
             let g = Math.floor(Math.random() * 256)
             let b = Math.floor(Math.random() * 256)
+
             //Set opacity to get value of it later for darkening
-            e.target.style.backgroundColor = `rgba(${r},${g},${b}, ${0.99})`
-            e.target.classList.add("colored")
+            elementOver.style.backgroundColor = `rgba(${r},${g},${b}, ${0.99})`
+            elementOver.classList.add("colored")
             return;
         }
 
         if(darkeningToggle.checked){
             //Get RGB and opacity values
-            let colors = e.target.style.backgroundColor.slice(5, e.target.style.backgroundColor.length-1).split(", ")
-            //Make it darker
-            e.target.style.backgroundColor = `rgba(${colors[0]},${colors[1]},${colors[2]},${colors[3] - 0.1})`
-            e.target.classList.add("colored")
+            let colors = elementOver.style.backgroundColor.slice(5, elementOver.style.backgroundColor.length-1).split(", ")
+            
+            //Make it darker by making opacity smaller
+            elementOver.style.backgroundColor = `rgba(${colors[0]},${colors[1]},${colors[2]},${colors[3] - 0.1})`
+            elementOver.classList.add("colored")
             return;
         }
-        //Default gray coloring
-        if(e.target.classList.contains("colored") && !overrideToggle.checked) return;
-        e.target.style.backgroundColor = "rgba(128, 128, 128, 0.99)"
-        e.target.classList.add("colored")
+
+        if(eraserToggle.checked){
+            //Set back color to default light-gray and make it colorable again if override isn't enabled
+            elementOver.style.backgroundColor = "rgba(211, 211, 211, 0.99)"
+            elementOver.classList.remove("colored")
+            return;
+        }
+
+        //Default dark-gray coloring mode
+        if(elementOver.classList.contains("colored") && !overrideToggle.checked) return;
+        elementOver.style.backgroundColor = "rgba(128, 128, 128, 0.99)"
+        elementOver.classList.add("colored")
     }
 })
 
-//Disables conflicting checkbox and mode
-function disableConflictingToggle(otherCheckbox){
-    if(otherCheckbox.checked) otherCheckbox.checked = false
+//Disables conflicting toggles/modes
+function disableConflictingToggles(toggleName, ...conflictingToggles){
+    if(toggleName.checked) conflictingToggles.forEach((toggle) => {
+        toggle.checked = false;
+    })
 }
 
 const rainbowToggle = document.querySelector("#rainbowToggle");
-rainbowToggle.addEventListener("click", () => {
-    if(rainbowToggle.checked) disableConflictingToggle(darkeningToggle)
-})
-
 const darkeningToggle = document.querySelector("#darkeningToggle");
-darkeningToggle.addEventListener("click", () => {
-    if(darkeningToggle.checked) disableConflictingToggle(rainbowToggle)
+const eraserToggle = document.querySelector("#eraserToggle");
+const overrideToggle = document.querySelector("#overrideToggle");
+
+rainbowToggle.addEventListener("click", () => {
+    disableConflictingToggles(rainbowToggle, darkeningToggle, eraserToggle)
 })
 
-const overrideToggle = document.querySelector("#overrideToggle");
+darkeningToggle.addEventListener("click", () => {
+    disableConflictingToggles(darkeningToggle, rainbowToggle, eraserToggle)
+})
+
+eraserToggle.addEventListener("click", () => {
+    disableConflictingToggles(eraserToggle, rainbowToggle, darkeningToggle, overrideToggle)
+})
+
+overrideToggle.addEventListener("click", () => {
+    disableConflictingToggles(overrideToggle, eraserToggle)
+})
 
 //Grid creation
 const drawingBoard = document.querySelector(".drawingBoard")
 
-function createGrid(squareCount){
+function newGrid(squareCount = 16){
+
+    //Limit input to 100 and below for performance limitations
+    while(!(Number.isInteger(squareCount)) || squareCount > 100){
+        squareCount = parseInt(prompt("How many squares for a new grid? <100"))
+    }
+
+    for(const oldSquare of document.querySelectorAll(".square")){
+        oldSquare.remove()
+    }
+
     let sideSize = `${100/squareCount}%`
 
     for(let i = 0; i < squareCount; i++){
@@ -57,24 +90,11 @@ function createGrid(squareCount){
             square.classList.add("square")
             square.style.width = sideSize
             square.style.height = sideSize
+            //Default light-gray
             square.style.backgroundColor = "rgba(211, 211, 211, 0.99)"
             drawingBoard.appendChild(square)
         }
     }
 }
 
-function newGrid(){
-    let squareCount = "";
-    //Limit input to 100 and below for performance reasons
-    while(!(Number.isInteger(squareCount)) || squareCount > 100){
-        squareCount = parseInt(prompt("How many squares for a new grid? <100"))
-    }
-
-    for(const square of document.querySelectorAll(".square")){
-        square.remove()
-    }
-
-    createGrid(squareCount)
-}
-
-createGrid(16)
+newGrid()
