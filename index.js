@@ -78,7 +78,7 @@ overrideToggle.addEventListener("click", () => {
 })
 
 //Grid creation
-const drawingBoard = document.querySelector(".drawingBoard")
+const drawingGrid = document.querySelector(".drawingGrid")
 
 function newGrid(squareCount){
 
@@ -101,9 +101,20 @@ function newGrid(squareCount){
             square.style.height = sideSize
             //Default light-gray
             square.style.backgroundColor = "rgba(211, 211, 211, 0.99)"
-            drawingBoard.appendChild(square)
+            drawingGrid.appendChild(square)
         }
     }
+}
+
+function clearGrid(){
+    for(const oldSquare of document.querySelectorAll(".square")){
+        oldSquare.style.backgroundColor = "rgba(211, 211, 211, 0.99)"
+        oldSquare.classList.remove("colored")
+    }
+}
+
+function shareGrid(){
+    alert("Function still in works...")
 }
 
 newGrid(16)

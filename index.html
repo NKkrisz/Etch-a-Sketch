@@ -11,21 +11,25 @@
     <div class="container">
         <div class="interactions">
             <h1>Etch-a-Sketch</h1>
-            <button onclick="newGrid()">New Grid</button>
-            <div class="checkboxes">
+            <div class="togglesAndButtons">
+                <button onclick="newGrid()">New Grid</button>
+                <button onclick="clearGrid()">Clear Grid</button>
+                <button onclick="shareGrid()">Share Grid</button>
+            </div>
+            <div class="togglesAndButtons">
                 <p>Toggle Rainbow Mode</p><input type="checkbox" id="rainbowToggle">
             </div>
-            <div class="checkboxes">
+            <div class="togglesAndButtons">
                 <p>Toggle Darkening Mode</p><input type="checkbox" id="darkeningToggle">
             </div>
-            <div class="checkboxes">
+            <div class="togglesAndButtons">
                 <p>Toggle Eraser</p><input type="checkbox" id="eraserToggle">
             </div>
-            <div class="checkboxes">
+            <div class="togglesAndButtons">
                 <p>Toggle Override</p><input type="checkbox" id="overrideToggle">
             </div>
         </div>
-        <div class="drawingBoard"></div>
+        <div class="drawingGrid"></div>
     </div>
 
     <script src="index.js"></script>
