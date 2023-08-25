@@ -1,4 +1,4 @@
-//TODO: Color picker, erase board, share drawing, touch compatibility
+//TODO: share and import drawing, touch compatibility
 //Coloring, darkening, erasing or overriding squares' colors on mouse/touch-movement
 document.addEventListener("mouseover", (e) => {sketching(e, "mouse")})
 document.addEventListener("mousedown", (e) => {sketching(e, "mouse")})
@@ -42,18 +42,42 @@ function sketching(e, inputType) {
             return;
         }
 
-        //Default dark-gray coloring mode
+        //Default (dark-gray) pencil coloring mode
         if(elementOver.classList.contains("colored") && !overrideToggle.checked) return;
-        elementOver.style.backgroundColor = "rgba(128, 128, 128, 0.99)"
+        elementOver.style.backgroundColor = currentPencilColor;
         elementOver.classList.add("colored")
     }
 }
 
+function hexToRGB(hex){
+    const r = parseInt(hex.substring(1, 3), 16);
+    const g = parseInt(hex.substring(3, 5), 16);
+    const b = parseInt(hex.substring(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, 0.99)`;
+}
+
 //Disables conflicting toggles/modes
 function disableConflictingToggles(toggleName, ...conflictingToggles){
-    if(toggleName.checked) conflictingToggles.forEach((toggle) => {
+    //Works with color chooser as well
+    if(toggleName.checked || toggleName.id === "chooseColor") conflictingToggles.forEach((toggle) => {
         toggle.checked = false;
     })
+}
+
+const chooseColor = document.querySelector("#chooseColor");
+
+//Default dark-gray coloring --> rgb(128, 128, 128)
+chooseColor.value = "#808080"
+let currentPencilColor = "rgba(128, 128, 128, 0.99)"
+
+chooseColor.addEventListener("input", () => {
+    currentPencilColor = hexToRGB(chooseColor.value);
+    disableConflictingToggles(chooseColor, rainbowToggle, darkeningToggle, eraserToggle)
+})
+
+function backToDefaultPencilColor(){
+    currentPencilColor = "rgba(128, 128, 128, 0.99)"
+    chooseColor.value = "rgba(128, 128, 128, 0.99)"
 }
 
 const rainbowToggle = document.querySelector("#rainbowToggle");
@@ -113,7 +137,11 @@ function clearGrid(){
     }
 }
 
-function shareGrid(){
+function saveGrid(){
+    alert("Function still in works...")
+}
+
+function importGrid(){
     alert("Function still in works...")
 }
 

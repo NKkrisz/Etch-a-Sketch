@@ -50,18 +50,40 @@ h1{
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    flex-wrap: wrap;
+    
     width: 100%;
     gap: 10px;
 }
 
-button{
+.buttonMenu button{
+    width: 100px;
+    height: 50px;
     padding: 10px;
+
+    font-size: 0.9rem;
 }
 
-#rainbowToggle, #darkeningToggle, #overrideToggle, #eraserToggle{
+.togglesAndButtons input{
     width: 30px;
     height: 30px;
+}
+
+.backToDefault{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+    
+    background-color: black;
+    border: none;
+
+    line-height: 30px;
+    font-size: 1.75rem;
+
+    cursor: pointer;
 }
 
 #rainbowToggle{

@@ -11,10 +11,14 @@
     <div class="container">
         <div class="interactions">
             <h1>Etch-a-Sketch</h1>
-            <div class="togglesAndButtons">
+            <div class="togglesAndButtons buttonMenu">
                 <button onclick="newGrid()">New Grid</button>
                 <button onclick="clearGrid()">Clear Grid</button>
-                <button onclick="shareGrid()">Share Grid</button>
+                <button onclick="saveGrid()">Save Grid</button>
+                <button onclick="importGrid()">Import Grid</button>
+            </div>
+            <div class="togglesAndButtons">
+                <p>Choose Pencil Color</p><button class="backToDefault" onclick="backToDefaultPencilColor()">🔄️</button><input type="color" id="chooseColor">
             </div>
             <div class="togglesAndButtons">
                 <p>Toggle Rainbow Mode</p><input type="checkbox" id="rainbowToggle">
