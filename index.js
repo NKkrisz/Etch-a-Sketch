@@ -77,7 +77,7 @@ chooseColor.addEventListener("input", () => {
 
 function backToDefaultPencilColor(){
     currentPencilColor = "rgba(128, 128, 128, 0.99)"
-    chooseColor.value = "rgba(128, 128, 128, 0.99)"
+    chooseColor.value = "#808080"
 }
 
 const rainbowToggle = document.querySelector("#rainbowToggle");
@@ -108,14 +108,17 @@ function newGrid(squareCount){
 
     //Limit input to 100 and below for performance limitations
     while(!(Number.isInteger(squareCount)) || squareCount > 100){
-        squareCount = parseInt(prompt("How many squares for a new grid? <100"))
+        squareCount = prompt("How many squares for a new grid? <100")
+        //Cancel new grid creation if user inputs nothing or presses cancel/escape
+        if(squareCount === null || squareCount === "") return;
+        squareCount = parseInt(squareCount)
     }
 
     for(const oldSquare of document.querySelectorAll(".square")){
         oldSquare.remove()
     }
 
-    let sideSize = `${100/squareCount}%`
+    const sideSize = `${100/squareCount}%`
 
     for(let i = 0; i < squareCount; i++){
         for(let j = 0; j < squareCount; j++){
@@ -137,12 +140,50 @@ function clearGrid(){
     }
 }
 
-function saveGrid(){
-    alert("Function still in works...")
+function copyGrid(){
+    const squareCount = 100 / (document.querySelector(".square").style.width).replace("%", "")
+    let bgColors = "";
+
+    for(const square of document.querySelectorAll(".square")){
+        bgColors += square.style.backgroundColor + ";"
+    }
+
+    navigator.clipboard.writeText(`${squareCount};${bgColors}`);
+    alert("Saved grid to clipboard")
 }
 
-function importGrid(){
-    alert("Function still in works...")
+function pasteGrid(){
+    const copyOfGrid = prompt("Paste grid here \nIf you see whitespace or not the full code don't worry")
+
+    if(copyOfGrid === null){
+        alert("Make sure you have copied the grid correctly!")
+        return;
+    }
+    
+    //Make copied data into an array for easier grid recreation
+    arrayCopyOfGrid = copyOfGrid.split(";")
+    
+    const squareCount = arrayCopyOfGrid[0];
+
+    for(const oldSquare of document.querySelectorAll(".square")){
+        oldSquare.remove()
+    }
+
+    const sideSize = `${100/squareCount}%`
+    
+    let currentBg = 1;
+
+    for(let i = 0; i < squareCount; i++){
+        for(let j = 0; j < squareCount; j++){
+            let square = document.createElement("div");
+            square.classList.add("square")
+            square.style.width = sideSize
+            square.style.height = sideSize
+            square.style.backgroundColor = arrayCopyOfGrid[currentBg]
+            drawingGrid.appendChild(square)
+            currentBg++;
+        }
+    }
 }
 
 newGrid(16)
