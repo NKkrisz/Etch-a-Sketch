@@ -141,7 +141,7 @@ function clearGrid(){
 }
 
 function copyGrid(){
-    const squareCount = 100 / (document.querySelector(".square").style.width).replace("%", "")
+    const squareCount = Math.floor(100 / (document.querySelector(".square").style.width).replace("%", ""))
     let bgColors = "";
 
     for(const square of document.querySelectorAll(".square")){
